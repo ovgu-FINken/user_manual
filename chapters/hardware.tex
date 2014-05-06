@@ -1,0 +1,50 @@
+\section{Hardware}
+
+\subsection{Akkus und Ladegerät}
+Die Akkus die wir benutzen sind 2-Zellen Litium-Polymer-Akkus mit 950mAh Kapazität.
+Zum Laden müssen die Akkus sowohl mit beiden Steckern mit dem Ladegerät verbunden werden, danach kann man mit dem Balance-Programm die Akkus laden.
+Wichtig ist, dass im Ladegerät 2S ausgewählt ist und die Stromstärke nicht über 2A eingestellt wird.
+(mit 1A Stromstärke zu laden ist schonender für die Akkus, über 4A können die Akkus anfangen zu brennen)
+Die Akkus sollten nicht ohne Aufsicht geladen werden.
+
+Am Quadrocopter kann man den Akku mit dem JST-Connector anschließen, der 4-Polige Balancestecker sollte ebenfalls angeschlossen werden, damit die Spannung im Flug überwacht werden kann (Polarität beachten!).
+
+Um neue Firmware zu flashen muss der Quadrocopter über USB mit dem Rechner verbunden werden, der Akku sollte dabei nicht angesteckt sein.
+
+\subsection{Komponenten}
+\subsubsection{Aktuatoren}
+
+Die Motoren des Quadrocopters (und letzendlich auch die Propeller) werden von sogenannten Speedcontrollern gesteuert, die aus dem Gleichstrom der Batterie einen 30-Phasen Wechseltstrom machen der die Motoren antreibt.
+Als Steuereingang verwenden die Speedcontroller ein PWM-Signal, dass vom FlightControler erzeugt wird.
+
+
+\subsubsection{Flight Control}
+
+Als FlightControl-Board verwenden wir ein Board vom Typ Paparazzi-Lia, auf dem bereits ein 10-DOM Lagesensor (IMU) integriert ist und auf dem die Paparazzi-Firmware läuft. Hier werden sowohl die Low-Level-Lageregelung als auch logisch höhere Funktionen wie Navigation umgesetzt und alle Aktuatoren und Sensoren angeschlossen.
+
+\subsubsection{Sonar}
+Die Sonarsensoren sind neben der IMU die wichtigsten Sensoren. Die Lagesensoren sind über I2C an die Flightcontrol angebunden.
+Die Adressen sind 0x71 bis 0x75, wobei 0x71 die Adresse des vorderen Sensors ist und im Uhrzeigersinn nummeriert wird.
+Der untere Sensor hat die Adresse 0x75.
+
+Der Code für die Sensortreiber befindet sich in sw/airborne/modules/sonar/sonar\_array.c.
+
+\subsubsection{Farbsensor}
+Der Farbsensor ist genau wie die Sonarsensoren per I$^2$C angebunden. Ein Treiber muss noch geschrieben werden\footnote{Zur Orientierung kann der Treiber für die Sonarsensoren genutzt werden.}.
+
+
+\subsubsection{Bluetooth}
+Bluetooth wird zum Empfang der Telemetriedaten und zur Steuerung des Autopiloten\footnote{Es geht als nicht um Manuellen Flug, sondern um Kommandos wie "Starten, Landen, Wegpunkt anfliegen etc.} genutzt.
+Um Bluetooth nutzen zu können muss der Quadrocopter mit dem Rechner mit der Bodenstation gepairt werden – das ist leider bei jedem Start von neuem Notwendig, obwohl der Bluetoothstandart auch automatisches Pairing vorsieht.
+\emph{Die PIN zum Pairing ist 1234.}
+
+
+\subsection{Fernbedienung}
+Die Fernbedienung dient zur manuellen Steuerung des Quadrocopters und zum umschalten der Autopiloten-Modi.
+
+\subsubsection{Manuelle Steuerung}
+Der Wichtigste Schalter ist open Rechts: Der Kill-Schalter. Dieser Schalter funktioniert quasi als Not-Aus – alle Motoren werden sofort ausgeschalten.
+Zum losfliegen muss dieser Schalter deaktiviert werden.
+Wichtig sind außerdem die beiden Gimbles der Fernbedienung: Links ist Schub und Yaw, rechts Pitch und Roll.
+
+\subsubsection{Autopiloten-Modi}
