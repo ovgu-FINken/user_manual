@@ -27,7 +27,7 @@ Die Sonarsensoren sind neben der IMU die wichtigsten Sensoren. Die Lagesensoren 
 Die Adressen sind 0x71 bis 0x75, wobei 0x71 die Adresse des vorderen Sensors ist und im Uhrzeigersinn nummeriert wird.
 Der untere Sensor hat die Adresse 0x75.
 
-Der Code für die Sensortreiber befindet sich in sw/airborne/modules/sonar/sonar\_array.c.
+Der Code für die Sensortreiber befindet sich in \path{sw/airborne/modules/sonar/sonar_array.c}.
 
 \subsubsection{Farbsensor}
 Der Farbsensor ist genau wie die Sonarsensoren per I$^2$C angebunden. Ein Treiber muss noch geschrieben werden\footnote{Zur Orientierung kann der Treiber für die Sonarsensoren genutzt werden.}.
@@ -48,3 +48,6 @@ Zum losfliegen muss dieser Schalter deaktiviert werden.
 Wichtig sind außerdem die beiden Gimbles der Fernbedienung: Links ist Schub und Yaw, rechts Pitch und Roll.
 
 \subsubsection{Autopiloten-Modi}
+Mit dem drei Wege-Schalter oben rechts an der Fernbedienung (neben dem Kill-Schalter) kann der Modus des Autopiloten gewechselt werden.
+Momentan sollten die Stellung unten – \enquote{Attitude Mode} zum normalen Fliegen mit Fernsteuerung und die Stellung oben – \enquote{Nav Mode} zum autonomen Flug nach \enquote{flight-plan}.
+Im Autopilotmodus wird je nach Einstellung der Schub durch den Schubhebel an der Fernsteuerung limitiert. \emph{Schaltet man wieder auf normalen Schub um, versucht der Quadrocopter sofort diese Obergrenze als aktuellen Schub umzuseten!}

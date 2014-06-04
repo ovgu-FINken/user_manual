@@ -1,10 +1,53 @@
 \section{Software}
 
-\subsection{Groundcontrolstation}
+\subsection{Paparazzi-Center}
 
-\subsection{Airframe}
+Das Paparazzi Center bietet bequeme Möglichkeiten zum Kompilieren und Flashen der Firmware und zum starten der zum Flug benötigten Tools.
+Um die Anwendung auszuführen muss im Paparazzi-Verzeichnis der Befehl \enquote{ ./paparazzi } eingegeben werden.
+Wenn Änderungen an der Konfiguration für das Bodensegment gemacht werden muss das make-Target \enquote{gcs} neu kompiliert werden.
 
-\subsection{Flight-Plan}
+
+Wenn man mit dem Quadrocopter fliegen will sollte man in etwa folgendes tun:
+\begin{enumerate}
+	\item Upload der neuen Firmware (falls neue Firmware geschrieben wurde)
+	\item Trennen von USB und verbinden der Batterie und Akkuüberwachung
+	\item Herstellen der Bluetooth-Verbindung (über das Betriebssystem)
+	\item Start einer Session (Button oben Rechts)
+	\item Fliegen
+	\item Kill-Switch auf \enquote{Kill}, abstecken der Batterie (und Akkuüberwachung)
+\end{enumerate}
+
+\subsubsection{Groundstation}
+Die Groundstation dient zum steuern des Quadrocopters – hier sieht man diverse Informationen wie aktueller Batteriestand, Navigationsmodus ...
+Von hier können auch Kommandos wie \enquote{Takeoff}, \enquote{Land}, etc. gegeben werden.
+
+\subsubsection{Messages}
+Unter tools $\Rightarrow$ messages befindet sich ein nützliches Werkzeug mit dem sich die Telemetriedaten ausgeben lassen – unter anderem auch die ausgabe der Sonar-Sensoren.
+Die angezeigten Daten können mit dem Real-Time-Plotter auch visualisiert werden.
+
 
 
 \subsection{Code}
+
+\subsubsection*{Versionsverwaltung}
+Der Code wird aktuell verwaltet mit der Versionskontrollsoftware "git". 
+Eine gute Referenz für die Benutzung von git findet man unter \url{http://www.ndpsoftware.com/git-cheatsheet.html}.
+Der Code wird gehostet unter \url{https://github.com/ovgu-FINken/paparazzi} und kann heruntergeladen werden mit \enquote{git clone}\footnote{Da mit git mehrere Features parallel entwickelt werden können, muss u.U. noch ein Branch ausgecheckt werden}.
+
+\subsubsection*{Organisation}
+
+Der Code im Paparazzi-Repository teilt sich für uns in zwei Bereiche ein: Einerseits die Konfigurationsdatein in \path{conf} und andererseits der Quelltext für die Firmware unter \path{sw/airborne}.
+Idealerweise sollte der Coder für die Firmware also für mehrere verschiedene Konfigurationen funktionieren, so dass z.B. statt einem Quadrocopter auch ein Flugzeug eingesetzt werden kann.
+
+
+\subsubsection*{Airframe}
+Im Airframe sind alle Spezifika des Fluggerätes zusammengefasst – also alles von der Drehrichtung der Motoren bis zur Adressierung einzelner Sensoren.
+Änderungen müssen hier eigentlich nur gemacht werden, sofern Hardware neu angebunden wird oder die Hardware selbst verändert wird.
+Unter anderem sind hier auch die PID-Werte für die Lageregelung festgelegt, die angepasst werden sollten wenn sich das Gewicht des Quadrocopters ändert.
+Unser Airframefile befindet sich unter \path{conf/airframes/ovgu/quadrotor_lia_ovgu.xml}.
+
+
+\subsubsection*{Flightplan}
+Im Flightplan(\path{conf/flight_plans/ovgu.xml} wird quasi eine "Mission" für den Quadrocopter festgelegt.
+Paparazzi sieht dafür im wesentlichen Wegpunktnavigation vor, aber unter anderem können hier "Exceptions" definiert werden, so das der Quadrocopter vor einer Wand ausweicht, falls er im normalen Flugmodus sonst dagegenstoßen würde.
+Momentan wird die eigentliche Steuerung von einer Funktion im Sonartreiber ausgeführt, die über den Flightplan aufgerufen wird.
