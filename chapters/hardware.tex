@@ -23,8 +23,8 @@ Als Steuereingang verwenden die Speedcontroller ein PWM-Signal, das vom FlightCo
 Als FlightControl-Board verwenden wir ein Board vom Typ Paparazzi-Lia, auf dem bereits ein 10-DOM Lagesensor (IMU) integriert ist und auf dem die Paparazzi-Firmware läuft. Hier werden sowohl die Low-Level-Lageregelung als auch logisch höhere Funktionen wie Navigation umgesetzt und alle Aktuatoren und Sensoren angeschlossen.
 
 \subsubsection{Sonar}
-Die Sonarsensoren sind neben der IMU die wichtigsten Sensoren. Die Lagesensoren sind über I2C an die Flightcontrol angebunden.
-Die I^$2$C-Adressen der Sonarsensoren sind 0x71 bis 0x74, wobei 0x71 die Adresse des vorderen Sensors ist und im Uhrzeigersinn nummeriert wird.
+Die Sonarsensoren sind neben der IMU die wichtigsten Sensoren. Die Lagesensoren sind über I$^2$C an die Flightcontrol angebunden.
+Die I$^2$C-Adressen der Sonarsensoren sind 0x71 bis 0x74, wobei 0x71 die Adresse des vorderen Sensors ist und im Uhrzeigersinn nummeriert wird.
 
 Der Code für die Sensortreiber befindet sich in \path{sw/airborne/modules/sonar/sonar_array.c}.
 
