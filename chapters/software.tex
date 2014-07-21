@@ -21,6 +21,13 @@ Wenn man mit dem Quadrocopter fliegen will sollte man in etwa folgendes tun:
 Die Groundstation dient zum steuern des Quadrocopters – hier sieht man diverse Informationen wie aktueller Batteriestand, Navigationsmodus ...
 Von hier können auch Kommandos wie \enquote{Takeoff}, \enquote{Land}, etc. gegeben werden.
 
+\subsubsection{Data-Link}
+Die Groundstation bekommt ihre Informationen über Bluetooth 4.0. Da in BT4.0 keine Serielle Verbindung im Protokoll enthalten ist, muss diese Verbindung zuerst über ein externes Programm hergestellt werden. Danach kann sich das Data-Link-Tool von Paparazzi auf das neu erstellte Pseudoterminal \path{/dev/pts/X} verbinden.
+
+Dazu muss in \path{/home/finken/bt-bridge/mkpty.sh} die MAC-Adresse des aktuellen Bluetoothmoduls einkommentiert werden.
+Danach kann das entsprechende Device (der Pfad von mkpty.sh angezeigt) in den enstprechenden Parameter des Data-Link-Programmes im Paparazzi-Center eingetragen werden.
+Danach kann das Data-Link-Programm gestartet werden und die Groundstation erhällt alle Informationen über den Quadrocopter.
+
 \subsubsection{Messages}
 Unter tools $\Rightarrow$ messages befindet sich ein nützliches Werkzeug mit dem sich die Telemetriedaten ausgeben lassen – unter anderem auch die ausgabe der Sonar-Sensoren.
 Die angezeigten Daten können mit dem Real-Time-Plotter auch visualisiert werden.
