@@ -58,3 +58,26 @@ Unser Airframefile befindet sich unter \path{conf/airframes/ovgu/quadrotor_lia_o
 Im Flightplan(\path{conf/flight_plans/ovgu.xml} wird quasi eine "Mission" für den Quadrocopter festgelegt.
 Paparazzi sieht dafür im wesentlichen Wegpunktnavigation vor, aber unter anderem können hier "Exceptions" definiert werden, so das der Quadrocopter vor einer Wand ausweicht, falls er im normalen Flugmodus sonst dagegenstoßen würde.
 Momentan wird die eigentliche Steuerung von einer Funktion im Sonartreiber ausgeführt, die über den Flightplan aufgerufen wird.
+
+\subsection{Modell}
+
+Um Strukturierter Arbeiten zu können, folgt die Software dem folgenden Modell der Copter.
+
+\subsubsection{Sensormodell}
+Diverse Variablen lassen sich durch Sensorik und Virtuelle Sensoren (also z.B. Sensorfusion oder Filter) beobachten.
+Dazu gehören: Geschwindigkeiten und Beschleunigungen in allen Achsen außer der Höhe, die Absolute Höhe, die Messungen der Sonarsensoren und noch einige weitere Werte.
+
+\subsubsection{Aktuatoren}
+Das Aktuatormodell ist beschränkt auf die Angabe einer Fluglage, die durch die Lageregelung des Quadrocopters umgesetzt werden soll. Dazu gehören Pitch- und Roll-Winkel, die Ableitung des Yaw-Winkels und der Schub.
+
+\subsubsection{Systemmodell}
+Der Zustand des Quadrocopters lässt sich beschreiben aus $\dot x$, $\dot y$, dem Yaw-Winkel($\phi$), dem Aktuellen Schub ($t$) und der aktuellen Höhe.
+Der Zusammenhang zwischen Aktuatoren und $\dot x$ bzw. $\dot y$ kann dabei ungefähr beschrieben werden wie folgt: \\
+\begin{math}
+	\dot x = k_t \cdot t \sin \alpha \\ 
+	\dot y = k_t \cdot t \sin \beta \\
+\end{math}
+$k_t$ ist dabei eine Konstante die sich aus der Masse des Quadrocopters und dem Verhältnis von vorgegebenen Schub und der tatsächlich erzeugten Kraft ergibt.
+
+\subsubsection{Umweltmodell}
+Die Umwelt des Quadrocopters soll zu nächst durch ein sehr einfaches Modell beschrieben werden: Durch den Abstand und Winkel des nächstgelegenen Objektes.
