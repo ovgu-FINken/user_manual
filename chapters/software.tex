@@ -63,6 +63,49 @@ Momentan wird die eigentliche Steuerung von einer Funktion im Sonartreiber ausge
 
 Um Strukturierter Arbeiten zu können, folgt die Software dem folgenden Modell der Copter.
 
+\begin{figure}
+	\centering
+	\begin{tikzpicture}
+		\begin{class}{Sensormodell}{0, 0}
+			\attribute{distance\_z}
+			\attribute{distance\_d\_front}
+			\attribute{distance\_d\_right}
+			\attribute{distance\_d\_left}
+			\attribute{distance\_d\_back}
+			\attribute{acceleration\_x}
+			\attribute{acceleration\_y}
+			\attribute{acceleration\_z}
+			\attribute{velocity\_alpha}
+			\attribute{velocity\_beta}
+			\attribute{velocity\_theta}
+			\attribute{velocity\_x}
+			\attribute{velocity\_y}
+		\end{class}
+		\begin{class}{Umgebungsmodell}{-10, 0}
+			\attribute{alpha}
+			\attribute{distace}
+		\end{class}
+		\begin{class}{Systemmodell}{-10, -10}
+			\attribute{distace\_z}
+			\attribute{velocity\_theta}
+			\attribute{velocity\_x}
+			\attribute{velocity\_y}
+		\end{class}
+		\begin{class}{Aktuatormodell}{0, -10}
+			\attribute{alpha}
+			\attribute{beta}
+			\attribute{theta}
+			\attribute{throttle}
+		\end{class}
+		\unidirectionalAssociation{Sensormodell}{distances}{ }{Umgebungsmodell}
+		\unidirectionalAssociation{Sensormodell}{velocity, acceleration}{ }{Systemmodell}
+		\unidirectionalAssociation{Umgebungsmodell}{set point}{ }{Systemmodell}
+		\unidirectionalAssociation{Systemmodell}{set point}{ }{Aktuatormodell}
+	\end{tikzpicture}
+	\caption{Modelle in UML}
+	\label{uml}
+\end{figure}
+
 \subsubsection{Sensormodell}
 Diverse Variablen lassen sich durch Sensorik und Virtuelle Sensoren (also z.B. Sensorfusion oder Filter) beobachten.
 Dazu gehören: Geschwindigkeiten und Beschleunigungen in allen Achsen außer der Höhe, die Absolute Höhe, die Messungen der Sonarsensoren und noch einige weitere Werte.
@@ -79,5 +122,5 @@ Der Zusammenhang zwischen Aktuatoren und $\dot x$ bzw. $\dot y$ kann dabei ungef
 \end{math}
 $k_t$ ist dabei eine Konstante die sich aus der Masse des Quadrocopters und dem Verhältnis von vorgegebenen Schub und der tatsächlich erzeugten Kraft ergibt.
 
-\subsubsection{Umweltmodell}
+\subsubsection{Umgebungsmodell}
 Die Umwelt des Quadrocopters soll zu nächst durch ein sehr einfaches Modell beschrieben werden: Durch den Abstand und Winkel des nächstgelegenen Objektes.
