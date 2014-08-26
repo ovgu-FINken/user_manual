@@ -122,5 +122,29 @@ Der Zusammenhang zwischen Aktuatoren und $\dot x$ bzw. $\dot y$ kann dabei ungef
 \end{math}
 $k_t$ ist dabei eine Konstante die sich aus der Masse des Quadrocopters und dem Verhältnis von vorgegebenen Schub und der tatsächlich erzeugten Kraft ergibt.
 
+Die Werte für $\dot x$ und $\dot y$ werden dabei mittels eines Kalman-Filters berechnet, der die Sensorwerte für die Beschleunigungen mit einbezieht.
+Die kinematischen Gleichungen geben dabei den folgenden Übergang vor:
+\begin{equation}
+	\left(
+		\begin{array}{c}
+			y_{t+1} \\ \dot y_{t+1}
+		\end{array}
+	\right)
+	=
+	\left(
+		\begin{array}{cc}
+			y_t & \dot y_t
+		\end{array}
+	\right)
+	\left(
+		\begin{array}{cc}
+			1	& 0 \\
+			1	& 1
+		\end{array}
+	\right)
+	\label{Kalman_T}
+\end{equation}
+
+
 \subsubsection{Umgebungsmodell}
 Die Umwelt des Quadrocopters soll zu nächst durch ein sehr einfaches Modell beschrieben werden: Durch den Abstand und Winkel des nächstgelegenen Objektes.
